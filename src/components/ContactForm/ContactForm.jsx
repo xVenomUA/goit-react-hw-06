@@ -3,6 +3,8 @@ import { nanoid } from "nanoid";
 import { Field, Formik, Form, ErrorMessage } from "formik";
 import { useId } from "react";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { addNumber } from "../../redux/action";
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, "Too Short!")
@@ -18,18 +20,20 @@ const initialValues = {
   name: "",
   number: "",
 };
-export const ConctactForm = ({ handleAddContact }) => {
+export const ConctactForm = () => {
   const idName = useId();
   const idNumber = useId();
+  const dispatch = useDispatch();
+
   const onSubmit = (values, actions) => {
     const newContact = {
       id: nanoid(),
       name: values.name,
       number: values.number,
     };
+    dispatch(addNumber(newContact));
     actions.resetForm();
-    handleAddContact(newContact);
-  }
+  };
   return (
     <Formik
       initialValues={initialValues}
@@ -40,7 +44,12 @@ export const ConctactForm = ({ handleAddContact }) => {
         <div className={css.field}>
           <div className={css.divName}>
             <label htmlFor={idName}>Name</label>
-            <Field type="text" name="name" id={idName} className={css.fieldInput} />
+            <Field
+              type="text"
+              name="name"
+              id={idName}
+              className={css.fieldInput}
+            />
             <ErrorMessage name="name" component="span" className={css.error} />
           </div>
           <div className={css.divNumber}>
@@ -58,7 +67,9 @@ export const ConctactForm = ({ handleAddContact }) => {
             />
           </div>
         </div>
-        <button type="submit" className={css.btn}>Add contact</button>
+        <button type="submit" className={css.btn}>
+          Add contact
+        </button>
       </Form>
     </Formik>
   );
