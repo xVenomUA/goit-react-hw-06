@@ -1,21 +1,10 @@
+import { createAction } from "@reduxjs/toolkit";
 
-export const addNumber = (newContact) => {
-  return {
-    type: "numbers/addNumber",
-    payload: newContact,
-  };
-};
+export const addNumber = createAction("numbers/addNumber");
 
-export const deleteNumber = (numberId) => {
-  return {
-    type: "numbers/deleteNumber",
-    payload: numberId,
-  };
-};
+export const deleteNumber = createAction("numbers/deleteNumber");
 
-export const filterNumbers = (query) => {
-  return {
-    type: "filter/filterNumbers",
-    payload: query,
-  };
-};
+export const filterNumbers = createAction("filter/filterNumbers");
+
+
+// те що ми передаємо то це payload який ми передаємо в action; 

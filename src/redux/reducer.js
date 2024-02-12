@@ -1,6 +1,7 @@
-// import { combineReducers } from "redux";
-
+import { createReducer } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
+
+import { addNumber, deleteNumber, filterNumbers } from "./action";
 
 const intialState = [
   { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
@@ -13,25 +14,21 @@ const intialState = [
   { id: "id-8", name: "Diana TopGun", number: "22567-941-26" },
 ];
 
-const numberReducer = (state = intialState, aciton) => {
-  switch (aciton.type) {
-    case "numbers/addNumber":
-      return [...state, aciton.payload];
-    case "numbers/deleteNumber":
-      return state.filter((number) => number.id !== aciton.payload);
-    default:
-      return state;
-  }
-};
+const filterReducer = createReducer("", (builder) => {
+  builder.addCase(filterNumbers, (state, action) => {
+    return action.payload;
+  });
+});
 
-const filterReducer = (state = "", aciton) => {
-  switch (aciton.type) {
-    case "filter/filterNumbers":
-      return aciton.payload;
-    default:
-      return state;
-  }
-};
+const numberReducer = createReducer(intialState, (builder) => {
+  builder
+    .addCase(deleteNumber, (state, action) => {
+      return state.filter((number) => number.id !== action.payload);
+    })
+    .addCase(addNumber, (state, action) => {
+      state.push(action.payload); // return [...state, action.payload];
+    });
+});
 
 export const rootReducer = combineReducers({
   numbers: numberReducer,
