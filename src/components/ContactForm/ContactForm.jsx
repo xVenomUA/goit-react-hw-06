@@ -1,10 +1,15 @@
 import css from "./ContactForm.module.css";
+
 import { nanoid } from "nanoid";
+
 import { Field, Formik, Form, ErrorMessage } from "formik";
-import { useId } from "react";
 import * as Yup from "yup";
+
+import { useId } from "react";
 import { useDispatch } from "react-redux";
-import { addNumber } from "../../redux/action";
+import { addNumber } from "../../redux/numberSlice";
+
+
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, "Too Short!")
@@ -16,10 +21,12 @@ const FeedbackSchema = Yup.object().shape({
     .required("Required number")
     .matches(/^[0-9-+]+$/, "Must be only digits"),
 });
+
 const initialValues = {
   name: "",
   number: "",
 };
+
 export const ConctactForm = () => {
   const idName = useId();
   const idNumber = useId();
@@ -31,8 +38,10 @@ export const ConctactForm = () => {
       name: values.name,
       number: values.number,
     };
+
     dispatch(addNumber(newContact));
     actions.resetForm();
+
   };
   return (
     <Formik

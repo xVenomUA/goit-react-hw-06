@@ -1,12 +1,13 @@
-import { rootReducer } from "./reducer";
-
-import { configureStore } from "@reduxjs/toolkit";
+import {
+  combineSlices,
+  configureStore,
+} from "@reduxjs/toolkit";
 
 import storage from "redux-persist/lib/storage";
 
 import {
-  persistReducer, 
-  persistStore, 
+  persistReducer,
+  persistStore,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -14,12 +15,19 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import { numberReducer } from "./numberSlice";
+import { filterReducer } from "./filterSlice";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
 };
+
+const rootReducer = combineSlices({
+  filter: filterReducer,
+  numbers: numberReducer,
+});
 
 const persistedTAskReducer = persistReducer(persistConfig, rootReducer);
 

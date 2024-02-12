@@ -1,9 +1,9 @@
 import { useId } from "react";
 import { useDispatch } from "react-redux";
 
-import { filterNumbers } from "../../redux/action";
 
 import css from "./SearchBar.module.css";
+import { filterNumbers } from "../../redux/filterSlice";
 
 export const SearchBar = () => {
   const id = useId();
