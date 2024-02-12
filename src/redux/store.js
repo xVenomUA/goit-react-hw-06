@@ -1,18 +1,21 @@
-import { devToolsEnhancer } from "@redux-devtools/extension";
-import { createStore } from "redux";
-import { rootReducer } from "./reducer";
+import { filterReducer, numberReducer } from "./reducer";
 import storage from "redux-persist/lib/storage";
-import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
-
-const enhancer = devToolsEnhancer();
+import { configureStore } from "@reduxjs/toolkit";
+import persistReducer from "redux-persist/es/persistReducer";
 
 const persistConfig = {
   key: "root",
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-export const store = createStore(persistedReducer, enhancer);
+export const store = persistReducer(
+  persistConfig,
+  configureStore({
+    reducer: {
+      numbers: numberReducer,
+      filter: filterReducer,
+    },
+  })
+);
 export const persistor = persistStore(store);

@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+// import { combineReducers } from "redux";
 
 const intialState = [
   { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
@@ -11,7 +11,7 @@ const intialState = [
   { id: "id-8", name: "Diana TopGun", number: "22567-941-26" },
 ];
 
-const numberReducer = (state = intialState, aciton) => {
+export const numberReducer = (state = intialState, aciton) => {
   switch (aciton.type) {
     case "numbers/addNumber":
       return [...state, aciton.payload];
@@ -22,7 +22,7 @@ const numberReducer = (state = intialState, aciton) => {
   }
 };
 
-const filterReducer = (state = "", aciton) => {
+export const filterReducer = (state = "", aciton) => {
   switch (aciton.type) {
     case "filter/filterNumbers":
       return aciton.payload;
@@ -31,7 +31,7 @@ const filterReducer = (state = "", aciton) => {
   }
 };
 
-export const rootReducer = combineReducers({
-  numbers: numberReducer,
-  filter: filterReducer,
-});
+// export const rootReducer = combineReducers({
+//   numbers: numberReducer,
+//   filter: filterReducer,
+// });
